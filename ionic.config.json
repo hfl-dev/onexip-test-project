@@ -1,0 +1,7 @@
+{
+  "name": "onexip-test-project",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

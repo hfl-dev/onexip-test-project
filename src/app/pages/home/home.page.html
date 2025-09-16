@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Events
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onAddEvent()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">
+        Inbox
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+   <ion-list *ngIf="events$ | async as events">
+    <app-event-item 
+    *ngFor="let event of events" 
+    [event]="event"
+    (delete)="onDeleteEvent($event)">
+  </app-event-item>
+  </ion-list>
+</ion-content>

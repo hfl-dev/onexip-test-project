@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Add Event</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()" [disabled]="!name || !date">Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Event Name</ion-label>
+      <ion-input [(ngModel)]="name" placeholder="Enter event name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Event Date</ion-label>
+      <ion-datetime
+        presentation="date"
+        [(ngModel)]="date"
+        placeholder="Select a date">
+      </ion-datetime>
+    </ion-item>
+  </ion-list>
+</ion-content>
