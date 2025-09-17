@@ -8,11 +8,14 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AppStoreModule } from './store/AppStoreModule';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { eventReducer } from './store/Event/event.reducer';
 import { ViewAddEventPage } from './components/view-add-event/view-add-event.page';
-import { ViewAddEventPageModule } from './components/view-add-event/view-add-event.module';
+import { reducers } from './store/app.reducers';
+import { localStorageSyncReducer } from './store/local-storage.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { EventEffects } from './services/event/event.effects';
+
+
 
 @NgModule({
   declarations: [
@@ -24,8 +27,10 @@ import { ViewAddEventPageModule } from './components/view-add-event/view-add-eve
     IonicModule.forRoot(), 
     AppRoutingModule,
     FormsModule,
-    ...AppStoreModule,
-    StoreModule.forFeature('events', eventReducer),
+    StoreModule.forRoot(reducers, {
+      metaReducers: [localStorageSyncReducer],
+    }),
+    EffectsModule.forRoot([EventEffects]),
     StoreDevtoolsModule.instrument({maxAge: 25})
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

@@ -4,8 +4,8 @@ import { ModalController } from '@ionic/angular';
 import { v4 as uuidv4 } from 'uuid';
 import { Event } from '../../models/Event';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../services/app-state';
-import { addEvent } from '../../store/Event/event.actions';
+import { AppState } from '../../store/app-state';
+import { addEvent } from '../../store/event/event.actions';
 
 @Component({
   selector: 'app-view-add-event',

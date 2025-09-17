@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Event } from '../../models/Event';
-import { AppState } from '../../services/app-state';
-import { selectEvents } from '../../store/Event/event.selectors';
-import { deleteEvent } from '../../store/Event/event.actions';
+import { AppState } from '../../store/app-state';
+import { selectEvents, selectLoading } from '../../store/event/event.selectors';
+import { deleteEvent, loadEvents } from '../../store/event/event.actions';
 import { ViewAddEventPage } from '../../components/view-add-event/view-add-event.page';
 import { ModalController } from '@ionic/angular';
 
@@ -16,12 +16,18 @@ import { ModalController } from '@ionic/angular';
 })
 export class HomePage {
   events$: Observable<Event[]>;
+  loading$: Observable<boolean>;
 
   constructor(
     private modalCtrl: ModalController,
     private store: Store<AppState>
   ) {
     this.events$ = this.store.pipe(select(selectEvents));
+    this.loading$ = this.store.select(selectLoading);
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(loadEvents());
   }
 
   async onAddEvent() {

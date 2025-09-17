@@ -1,4 +1,3 @@
-import {Injectable} from '@angular/core';
 import {Action, createAction, props} from '@ngrx/store';
 
 import {Event} from '../../models/Event';
@@ -14,7 +13,14 @@ export const deleteEvent = createAction(
   props<{ event: Event }>()
 )
 
-export const loadEvents = createAction(
-  'Event Load events from store',
-  (events: Event[]) => ({ events })
-)
+export const loadEvents = createAction('[Event] Load Events');
+
+export const loadEventsSuccess = createAction(
+  '[Event] Load Events Success',
+  props<{ events: Event[] }>()
+);
+
+export const loadEventsFailure = createAction(
+  '[Event] Load Events Failure',
+  props<{ error: any }>()
+);

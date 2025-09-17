@@ -1,18 +1,9 @@
-import {Action, createReducer, on} from '@ngrx/store';
-import {addEvent, deleteEvent, loadEvents} from './event.actions';
-import {EventState} from './event.state'; 
-
-
-export const initialState: EventState = {
-  events: [{
-    id: '1',
-    name: 'Initial Event',
-    date: new Date()    
-  }]
-}
+import {createReducer, on} from '@ngrx/store';
+import {addEvent, deleteEvent, loadEvents, loadEventsFailure, loadEventsSuccess} from './event.actions';
+import {initialState} from './event.state'; 
 
 export const eventReducer = createReducer(
-    initialState,
+  initialState,
   on(addEvent, (state, action) => ({
     ...state,
     events: [...state.events, action.event],
@@ -23,12 +14,21 @@ export const eventReducer = createReducer(
     events: state.events.filter(e => e !== action.event),
   })),
 
-  on(loadEvents, (state, { events }) => ({
+  on(loadEvents, state => ({
     ...state,
-    events: [...events],
+    loading: true,
+    error: null,
+  })),
+
+  on(loadEventsSuccess, (state, { events }) => ({
+    ...state,
+    events,
+    loading: false,
+  })),
+
+  on(loadEventsFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
   }))
 );
-
-export function loadingReducer(state: EventState, action: Action) {
-    return eventReducer(state, action);
-}
